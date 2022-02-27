@@ -68,8 +68,62 @@ spring mvc를 공부한 내용 기록
     - `userMap['userA']['username']`
     - `userMap['userA'].getUsername()`
 
+## 4. 검증1- Validation
+
+> 컨트롤러의 중요한 역할 중 하나는 HTTP 요청이 정상인지 검증하는 것
+
+**클라이언트 검증과 서버 검증**
+- 클라이언트 검증은 조작할 수 있어 보안에 취약
+- 서버만 사용한 검증은 즉각적인 사용성이 부족
+- 클라이언트 검증 + 서버 검증을 적절히 사용하는 것이 중요
+
+
+### BindingResult
+
+- 검증할 객체 파라미터의 다음에 위치
+
+### FiledError
+
+- 필드 오류
+
+```java
+public FieldError(String objectName, String field, String defaultMessage) {}
+
+public FieldError(String objectName, String field, @Nullable Object rejectedValue, boolean bindingFailure, @Nullable String[] codes, @Nullable Object[] arguments, @Nullable String defaultMessage)
+```
+
+- `objectName`: `@ModelAttribute` 이름
+- `field`: 오류가 발생한 객체의 필드 이름
+- `rejectedValue`: 사용자가 입력한 값. 사용자가 입력한 값을 저장하기 위해 사용.
+- `bindingFilure`: 바인딩 실패(타입 오류)인지, 검증 실패인지 구분하는 값
+- `codes`: 메시지 코드
+- `arguments`: 메시지에서 사용하는 인자
+- `defaultMessage`: 오류 기본 메시지
+
+**스프링의 바인딩 오류 처리**
+- 타입 오류 시에 스프링은 `FieldError`을 생성
+- 생성한 오류를 `BindingResult`에 담아 컨트롤러 호출
+
+
+### ObjectError
+- 글로벌 오류
+- 필드오류가 아닌 오류
+
+``` java
+public ObjectError(String objectName, String defaultMessage) {}
+```
+- `objectName`: `@ModelAttribute` 이름
+- `defaultMessage`: 오류 기본 메시지
+
+
+### errors 메시지 파일
+- `~.properties` 파일에 오류 메시지 작성
+- `application.properties` 파일에 `spring.messages.basename=messages,errors` 설정 추가
+
+
 
 ## 6. 로그인 처리1 - 쿠키, 세션
+
 
 ### 쿠키의 종류
 
