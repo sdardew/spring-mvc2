@@ -68,6 +68,8 @@ spring mvc를 공부한 내용 기록
     - `userMap['userA']['username']`
     - `userMap['userA'].getUsername()`
 
+---
+
 ## 4. 검증1- Validation
 
 > 컨트롤러의 중요한 역할 중 하나는 HTTP 요청이 정상인지 검증하는 것
@@ -120,7 +122,34 @@ public ObjectError(String objectName, String defaultMessage) {}
 - `~.properties` 파일에 오류 메시지 작성
 - `application.properties` 파일에 `spring.messages.basename=messages,errors` 설정 추가
 
+**reject 함수**
+``` java
+void rejectValue(@Nullable String field, String errorCode, @Nullable Object[] errorArgs, @Nullable String defaultMessage);
 
+void reject(String errorCode, @Nullable Object[] errorArgs, @Nullable String defaultMessage);
+```
+- `field`: 오류 필드명
+- `errorCode`: 오류 코드
+- `errorArgs`: 오류 메시지 인자
+- `defaultMessage`: 기본 메시지
+
+### MessageCodesResolver
+- 인터페이스 (`DefaultMessageCodesResolver`)
+- 오류 메시지 코드 생성
+
+### DefaultMessageCodesResolver
+- `MessageCodesResolver`의  기본 구현체
+- 메시지 생성 규칙
+  - 객체 오류
+    1. code + "." + objectName
+    2. code
+  - 필드 오류
+    1. code
+  
+
+
+
+---
 
 ## 6. 로그인 처리1 - 쿠키, 세션
 
